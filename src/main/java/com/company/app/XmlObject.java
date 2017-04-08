@@ -73,23 +73,28 @@ public class XmlObject {
         }
     }
 
-
-    private void paste(NodeList nl, Node toAdd) {
-        for (int i = 0; i < nl.getLength(); i++) {
-            if (nl.item(i).getNodeName().equals(toAdd.getNodeName())) {
-                nl.item(i).getParentNode().appendChild(toAdd); // WRONG_DOCUMENT_ERR
+    public void paste(Node toAdd) {
+        for(int i = 0; i < nodeList.getLength(); i++) {
+            if (nodeList.item(i).getNodeName().equals(toAdd.getNodeName())) {
+                Node n = document.importNode(toAdd, true);
+                nodeList = document.getDocumentElement().getChildNodes();
+                nodeList.item(i).appendChild(n);
                 return;
+
             }
-            paste(nl.item(i).getChildNodes(), toAdd);
+
         }
+        paste(toAdd);
     }
+
     public void addNode(String rawXml) {
         try {
             DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             InputSource is = new InputSource(new StringReader(rawXml));
             Document d = db.parse(is);
             Node toAdd = d.getDocumentElement().getParentNode();
-            paste(nodeList, toAdd.getFirstChild());
+            paste(toAdd);
+
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
