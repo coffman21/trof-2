@@ -1,14 +1,14 @@
 package com.company.app;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
 /**
@@ -35,6 +35,10 @@ public class XmlObject {
         }
     }
 
+    public NodeList getNodeList() {
+        return this.nodeList;
+    }
+
     public void printRawXml() {
         try {
             BufferedReader br = new BufferedReader(new FileReader(this.path));
@@ -44,20 +48,6 @@ public class XmlObject {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-    }
-
-    public void printTags(Node nodes, int deep, int currDeep) {
-        if (nodes.hasChildNodes()) {
-            currDeep++;
-            if (currDeep > deep) {
-                System.out.println(nodes.getNodeName() + " : " + nodes.getTextContent());
-            }
-            NodeList nl = nodes.getChildNodes();
-            for (int j=0 ; j < nl.getLength() ; j++) {
-                printTags(nl.item(j), deep, currDeep);
-            }
         }
     }
 
@@ -69,13 +59,26 @@ public class XmlObject {
     public void printXml(int deep){
         System.out.println("XML file content:");
         for (int i = 0; i < nodeList.getLength(); i++) {
-            printTags(nodeList.item(i), deep, 1);
+            printNode(nodeList.item(i), deep, 1);
         }
     }
 
-    public void paste(Node toAdd) {
-        for(int i = 0; i < nodeList.getLength(); i++) {
-            if (nodeList.item(i).getNodeName().equals(toAdd.getNodeName())) {
+    public void printNode(Node nodes, int deep, int currDeep) {
+        if (nodes.hasChildNodes()) {
+            currDeep++;
+            if (currDeep > deep) {
+                System.out.println(nodes.getNodeName() + " : " + nodes.getTextContent());
+            }
+            NodeList nl = nodes.getChildNodes();
+            for (int j=0 ; j < nl.getLength() ; j++) {
+                printNode(nl.item(j), deep, currDeep);
+            }
+        }
+    }
+
+    public void paste(NodeList nl, Node toAdd) {
+        for(int i = 0; i < nl.getLength(); i++) {
+            if (nl.item(i).getNodeName().equals(toAdd.getNodeName())) {
                 Node n = document.importNode(toAdd, true);
                 nodeList = document.getDocumentElement().getChildNodes();
                 nodeList.item(i).appendChild(n);
@@ -84,25 +87,80 @@ public class XmlObject {
             }
 
         }
-        paste(toAdd);
+        paste(nl, toAdd);
     }
 
-    public void addNode(String rawXml) {
-        try {
-            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            InputSource is = new InputSource(new StringReader(rawXml));
-            Document d = db.parse(is);
-            Node toAdd = d.getDocumentElement().getParentNode();
-            paste(toAdd);
+    public void addNode(String tag, String name, String model, String price) {
+        Element dataTag = document.getDocumentElement();
 
-        } catch (ParserConfigurationException e) {
+        Element carsTag =  (Element) dataTag.getElementsByTagName(tag+"s").item(0);
+
+        Element newVehicle = document.createElement(tag);
+
+        Element setName = document.createElement("name");
+        setName.setTextContent(name);
+
+        Element setModel = document.createElement("model");
+        setModel.setTextContent(model);
+
+        Element setPrice = document.createElement("price");
+        setPrice.setTextContent(price);
+
+        newVehicle.appendChild(setName);
+        newVehicle.appendChild(setModel);
+        newVehicle.appendChild(setPrice);
+        carsTag.appendChild(newVehicle);
+
+        nodeList = document.getDocumentElement().getChildNodes();
+    }
+
+    /*
+     * @nl in this method takes \n values somehow.
+      * reduce it by deleting newline characters from .xml file :)
+     */
+
+    public void deleteNode(int index, String category) {
+        Node n = document.getElementsByTagName(category).item(0);
+        NodeList nl = n.getChildNodes();
+        document.getElementsByTagName(category).item(0).removeChild(nl.item(index));
+
+        nodeList = document.getDocumentElement().getChildNodes();
+
+    }
+    
+    @Override
+    public String toString() {
+        try {
+            DOMSource source = new DOMSource(document);
+            StringWriter w = new StringWriter();
+            StreamResult sr = new StreamResult(w);
+            TransformerFactory transFactory = TransformerFactory.newInstance();
+            Transformer transformer = transFactory.newTransformer();
+            transformer.transform(source, sr);
+            return w.toString();
+
+        } catch (TransformerConfigurationException e) {
             e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (TransformerException e) {
             e.printStackTrace();
         }
-
-
+        return "";
     }
-}
+    public void printAttribute(String attr) {
+        for(int k=0;k<nodeList.getLength();k++){
+                printTags((Node)nodeList.item(k), attr);
+            }
+        }
+    public void printTags(Node nodes, String attr){
+        if (nodes.getNodeName().equals(attr)) {
+            System.out.println(nodes.getNodeName() + " : " + nodes.getTextContent());
+        }
+        if (nodes.hasChildNodes()) {
+            NodeList nl=nodes.getChildNodes();
+                for (int j=0;j<nl.getLength();j++) {
+                    printTags(nl.item(j), attr);
+                }
+            }
+        }
+    }
+

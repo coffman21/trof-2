@@ -5,56 +5,42 @@
             <name>Lada</name>
             <model>Kalina</model>
             <price>300000</price>
-        </car>
-
-        <car>
+        </car><car>
             <name>BMW</name>
             <model>X6</model>
             <price>3000000</price>
-        </car>
-
-        <car>
+        </car><car>
             <name>Lada</name>
             <model>2106</model>
             <price>50000</price>
-        </car>
-
-        <car>
+        </car><car>
             <name>Audi</name>
             <model>A100</model>
             <price>500000</price>
-        </car>
-
-        <car>
+        </car><car>
             <name>Porsche</name>
             <model>Cayenne</model>
             <price>4000000</price>
-        </car>
-
-        <car>
+        </car><car>
             <name>Volkswagen</name>
             <model>Transporter</model>
             <price>800000</price>
         </car>
     </cars>
-
     <bikes>
         <bike>
             <name>Panda</name>
             <model>600</model>
             <price>10000</price>
-        </bike>
-        <bike>
+        </bike><bike>
             <name>Banzai</name>
             <model>750</model>
             <price>29990</price>
-        </bike>
-        <bike>
+        </bike><bike>
             <name>Stiletto</name>
             <model>900</model>
             <price>32000</price>
-        </bike>
-        <bike>
+        </bike><bike>
             <name>Diablo</name>
             <model>1000</model>
             <price>50000</price>

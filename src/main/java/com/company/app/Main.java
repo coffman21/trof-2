@@ -12,13 +12,18 @@ public class Main {
         obj.printRawXml();
         obj.printXml(2);
 
-        obj.addNode("<car>\n" +
-                "            <name>Toyota</name>\n" +
-                "            <model>Mark II</model>\n" +
-                "            <price>500000</price>\n" +
-                "        </car>");
-        obj.printRawXml();
         // 3. Создайте объект XmlDocument и начните работу с xml-документом
+        // 4. Добавьте в документ 2 новых элемента
+        obj.addNode("car", "Toyota", "Mark II", "500000");
+        obj.addNode("bike", "Wild Thing", "2000", "0");
+
+        // 5. Удалите из документа первый узел
+        obj.deleteNode(1, "cars");
+        System.out.println(obj.toString());
+
+        // 6. Выведите на консоль значения какого-либо атрибута у всех элементов
+        obj.printAttribute("name");
+
 
     }
 }
