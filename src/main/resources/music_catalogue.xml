@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Music>
+    <Artist Name="Metallica">
+        <Album Title="Master Of Puppets" Release_date="1986" Type="LP">
+            <Song No="1" Title="Battery" Music="Hetfield, Ulrich" Length="5:12" Genre="Thrash Metal"></Song>
+            <Song No="2" Title="Master Of Puppets" Music="Hetfield, Ulrich, Burton, Hammett" Length="8:36" Genre="Thrash Metal"></Song>
+            <Song No="3" Title="The Things That Should Not Be" Music="Hetfield, Ulrich, Hammett" Length="6:37" Genre="Thrash Metal"></Song>
+            <Song No="4" Title="Sanitarium" Music="Hetfield, Ulrich, Hammett" Length="6:37" Genre="Thrash Metal"></Song>
+        </Album>
+        <Album Title="St. Anger" Release_date="2003" Type="LP">
+            <Song No="1" Title="Frantic" Music="Hetfield, Ulrich, Hammett, Rock" Length="5:50" Genre="Pop Rock"></Song>
+            <Song No="2" Title="St. Anger" Music="Hetfield, Ulrich, Hammett, Rock" Length="7:21" Genre="Pop Rock"></Song>
+            <Song No="3" Title="Some Kind Of Monster" Music="Hetfield, Ulrich, Hammett, Rock" Length="8:26" Genre="Pop Rock"></Song>
+            <Song No="4" Title="Dirty Window" Music="Hetfield, Ulrich, Hammett, Rock" Length="5:25" Genre="Pop Rock"></Song>
+        </Album>
+    </Artist>
+    <Artist Name="Getter">
+        <Album Title="Wait The Frick" Release_date="2016" Type="EP">
+            <Song No="1" Title="2 High" Music="Getter, $uicideboy$" Length="2:34" Genre="Cheap Dubstep"></Song>
+        </Album>
+    </Artist>
+    <Artist Name="$uicideboy$">
+        <Album Title="Songsthatwewontgetsuedforbutattheendofthedayweallgonnadieanyway" Release_date="2014" Type="Mixtape">
+            <Song No="1" Title="Paris" Music="$loth, Cherry" Length="1:42" Genre="Cloud Rap"></Song>
+            <Song No="2" Title="AM/PM" Music="$loth, Cherry" Length="2:04" Genre="Cloud Rap"></Song>
+            <Song No="3" Title="Dead Batteries" Music="$loth, Cherry" Length="2:41" Genre="Cloud Rap"></Song>
+        </Album>
+    </Artist>
+</Music>
